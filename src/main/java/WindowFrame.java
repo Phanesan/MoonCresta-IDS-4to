@@ -35,7 +35,7 @@ public class WindowFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		MenuPanel menuPanel = new MenuPanel(0, 0);
+		MenuPanel menuPanel = new MenuPanel();
 		contentPane.add(menuPanel, BorderLayout.CENTER);
 	}
 

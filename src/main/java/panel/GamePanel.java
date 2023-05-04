@@ -1,14 +1,14 @@
 package main.java.panel;
 
+import java.awt.Color;
+
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel {
 
-	/**
-	 * Create the panel.
-	 */
 	public GamePanel() {
-
+		setSize(1280,720);
+		setBackground(Color.BLACK);
 	}
 
 }
