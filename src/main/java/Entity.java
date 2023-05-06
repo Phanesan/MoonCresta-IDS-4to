@@ -2,14 +2,13 @@ package main.java;
 
 public class Entity{
 	
-	private boolean alive = false;
+	private boolean alive;
 	private Location location;
 	
 	public Entity(Location location) {
-		this.location = getLocation();
-		this.alive = isAlive();
+		this.alive = true;
+		this.location = location;
 	}
-	
 	
 	public boolean isAlive() {
 		return alive;
