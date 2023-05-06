@@ -2,7 +2,7 @@ package main.java;
 
 public class Location {
 	
-	private int x, y;
+	public int x, y;
 	
 	public int getX() {
 		return x;
@@ -11,13 +11,10 @@ public class Location {
 	public int getY() {
 		return y;
 	}
-
+	
 	public Location(int x, int y) {
-		this.x = 1;
-		this.y = 1;
-		x = this.x;
-		y = this.y;
-		
+		this.x = x;
+		this.y = y;
 	}
 	
 }
