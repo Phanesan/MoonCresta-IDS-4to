@@ -1,10 +1,15 @@
 package main.java.utils;
 
 import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 public abstract class ImageUtil {
 	
@@ -26,14 +31,9 @@ public abstract class ImageUtil {
 
         return img.getScaledInstance(width,height,Image.SCALE_SMOOTH);
     }
-
-    /**
-     * Obtienes el {@link InputStream} de algun archivo
-     * @param path la ruta relativa del archivo
-     * @return el {@link InputStream} del archivo
-     */
-    public static InputStream getStream(String path) {
-        return ImageUtil.class.getClassLoader().getResourceAsStream(path);
+    
+    public static ImageIcon getSourceImageIcon(URL url) {
+        return new ImageIcon(url);
     }
 	
 }

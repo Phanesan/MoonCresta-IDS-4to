@@ -9,6 +9,7 @@ import main.java.Player;
 import main.java.WindowFrame;
 import main.java.thread.GameThread;
 import main.java.thread.ThreadGameHandler;
+import main.java.utils.FrameUtil;
 import main.java.utils.ImageUtil;
 
 import java.awt.BorderLayout;
@@ -31,14 +32,14 @@ public class GamePanel extends JPanel {
 	public GamePanel(WindowFrame instanceMain) {
 		airshipSize = 50;
 		
-		airship = ImageUtil.resizeImage(airshipSize, airshipSize, ImageUtil.getStream("main/resources/airship.png"));
+		airship = ImageUtil.resizeImage(airshipSize, airshipSize, FrameUtil.getStream("main/resources/airship.png"));
 		
 		threadGameHandler = new ThreadGameHandler(this);
 		this.instanceMain = instanceMain;
 		
 		player = new Player(new Location(410, 600));
 		setSize(1280,720);
-		setBackground(Color.BLACK);
+		setBackground(Color.BLUE);
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel InfoPanel = new JPanel();
@@ -77,6 +78,8 @@ public class GamePanel extends JPanel {
 		Game.add(graphicGamePanel, BorderLayout.CENTER);
 		
 		gameLoop = threadGameHandler.startThread(new GameThread(threadGameHandler));
+		revalidate();
+		repaint();
 	}
 
 	public Player getPlayer() {

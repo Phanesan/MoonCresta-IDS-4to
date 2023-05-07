@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import main.java.Entity;
+import main.java.Location;
+import main.java.Player;
 import main.java.panel.GamePanel;
 
 public class ThreadGameHandler {
