@@ -43,7 +43,7 @@ public class WindowFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		FrameUtil.changePanel(contentPane, new GamePanel(this));
+		FrameUtil.changePanel(contentPane, new MenuPanel());
 		
 		addKeyListener(new KeyListener() {
 			
