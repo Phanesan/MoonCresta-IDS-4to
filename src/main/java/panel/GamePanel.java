@@ -100,31 +100,12 @@ public class GamePanel extends JPanel {
 		}
 		Clip backgroundClip = backgroundTrack.getClip();
 		runningLoop = true;
-		/*Thread backgroundLoopThread = new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				synchronized (backgroundClip) {
-					while(runningLoop) {
-						if(backgroundClip.getFramePosition() > 7333752) {
-							backgroundClip.setFramePosition(728845);
-							
-						}
-						if(!backgroundClip.isActive()) {
-							runningLoop = false;
-							System.out.println("stop soundtrack");
-						}
-					}
-				}
-			}
-		});*/
 		Thread backgroundLoopThread = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
 				synchronized (backgroundClip) {
 					while(runningLoop) {
-						System.out.println(backgroundClip.getFramePosition());
 						if(backgroundClip.getMicrosecondPosition() > 17550000) {
 							backgroundClip.setLoopPoints(720045, 7283752);
 							backgroundClip.loop(Clip.LOOP_CONTINUOUSLY);
