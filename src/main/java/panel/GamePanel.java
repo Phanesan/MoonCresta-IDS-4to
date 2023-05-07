@@ -9,16 +9,27 @@ import main.java.Player;
 import main.java.WindowFrame;
 import main.java.thread.GameThread;
 import main.java.thread.ThreadGameHandler;
+import main.java.utils.AudioUtil;
 import main.java.utils.FrameUtil;
 import main.java.utils.ImageUtil;
+import main.java.utils.Sound;
 
 import java.awt.BorderLayout;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineEvent.Type;
+import javax.sound.sampled.LineListener;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Image;
+import java.io.IOException;
 
 public class GamePanel extends JPanel {
 
@@ -27,6 +38,8 @@ public class GamePanel extends JPanel {
 	private Image airship;
 	private ThreadGameHandler threadGameHandler;
 	private Thread gameLoop;
+	private Sound backgroundTrack;
+	private volatile boolean runningLoop;
 	private int airshipSize;
 	
 	public GamePanel(WindowFrame instanceMain) {
@@ -78,6 +91,50 @@ public class GamePanel extends JPanel {
 		Game.add(graphicGamePanel, BorderLayout.CENTER);
 		
 		gameLoop = threadGameHandler.startThread(new GameThread(threadGameHandler));
+		
+		try {
+			backgroundTrack = instanceMain.getSoundHandler().startSound(AudioSystem.getAudioInputStream(FrameUtil.getStream("main/resources/sounds/background/track1.wav")), 0.5f);
+		} catch (UnsupportedAudioFileException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Clip backgroundClip = backgroundTrack.getClip();
+		runningLoop = true;
+		/*Thread backgroundLoopThread = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				synchronized (backgroundClip) {
+					while(runningLoop) {
+						if(backgroundClip.getFramePosition() > 7333752) {
+							backgroundClip.setFramePosition(728845);
+							
+						}
+						if(!backgroundClip.isActive()) {
+							runningLoop = false;
+							System.out.println("stop soundtrack");
+						}
+					}
+				}
+			}
+		});*/
+		Thread backgroundLoopThread = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				synchronized (backgroundClip) {
+					while(runningLoop) {
+						System.out.println(backgroundClip.getFramePosition());
+						if(backgroundClip.getMicrosecondPosition() > 17550000) {
+							backgroundClip.setLoopPoints(720045, 7283752);
+							backgroundClip.loop(Clip.LOOP_CONTINUOUSLY);
+							runningLoop = false;
+						}
+					}
+				}
+			}
+		});
+		backgroundLoopThread.start();
 	}
 
 	public Player getPlayer() {
