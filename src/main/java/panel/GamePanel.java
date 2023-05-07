@@ -78,8 +78,6 @@ public class GamePanel extends JPanel {
 		Game.add(graphicGamePanel, BorderLayout.CENTER);
 		
 		gameLoop = threadGameHandler.startThread(new GameThread(threadGameHandler));
-		revalidate();
-		repaint();
 	}
 
 	public Player getPlayer() {
