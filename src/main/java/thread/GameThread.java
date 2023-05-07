@@ -46,7 +46,8 @@ public class GameThread	implements Runnable {
 				}
 				instance.getInstance().getInstanceMain().setLastKey(null);
 				
-				instance.getInstance().repaint();
+				instance.getInstance().getInstanceMain().getContentPanel().revalidate();
+				instance.getInstance().getInstanceMain().getContentPanel().repaint();
 			}
 		}
 	}

@@ -13,10 +13,13 @@ import java.awt.BorderLayout;
 import main.java.panel.GamePanel;
 import main.java.panel.MenuPanel;
 import main.java.utils.FrameUtil;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
 
 public class WindowFrame extends JFrame {
 
 	private JPanel contentPane;
+	private SoundHandler soundHandler;
 	private KeyEvent lastKey;
 
 	public static void main(String[] args) {
@@ -33,6 +36,8 @@ public class WindowFrame extends JFrame {
 	}
 
 	public WindowFrame() {
+		soundHandler = new SoundHandler(this);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1280,720);
 		setResizable(false);
@@ -43,7 +48,7 @@ public class WindowFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		FrameUtil.changePanel(contentPane, new MenuPanel());
+		FrameUtil.changePanel(this, new MenuPanel(this));
 		
 		addKeyListener(new KeyListener() {
 			
@@ -64,7 +69,7 @@ public class WindowFrame extends JFrame {
 			}
 		});
 	}
-
+	
 	public KeyEvent getLastKey() {
 		return lastKey;
 	}
@@ -73,4 +78,13 @@ public class WindowFrame extends JFrame {
 		this.lastKey = lastKey;
 	}
 
+	public SoundHandler getSoundHandler() {
+		return soundHandler;
+	}
+	
+	public JPanel getContentPanel() {
+		return contentPane;
+	}
+	
+	
 }

@@ -22,16 +22,26 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 
+import main.java.WindowFrame;
+import main.java.utils.FrameUtil;
 import main.java.utils.ImageUtil;
+import main.java.utils.Sound;
 
 import java.io.File;
+import java.io.IOException;
+
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
-public class MenuPanel extends JPanel  {
-	private Clip clip;
+public class MenuPanel extends JPanel {
 	
-	public MenuPanel() {
+	private WindowFrame instanceMain;
+	private Sound backgroundSound;
+	
+	public MenuPanel(WindowFrame instanceMain) {
+		this.instanceMain = instanceMain;
 		
 		setSize(1280,720);
 		setBackground(new Color(0, 0, 0));
@@ -39,7 +49,6 @@ public class MenuPanel extends JPanel  {
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 1280, 720);
 		add(panel);
-		
 		
 		BordeRedondo border = new BordeRedondo(15);
 		
@@ -52,8 +61,8 @@ public class MenuPanel extends JPanel  {
 		Empezar.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					 
+					FrameUtil.changePanel(instanceMain, new GamePanel(instanceMain));
+					instanceMain.getSoundHandler().removeSound(backgroundSound.getClip());
 				}
 			
 		});
@@ -75,14 +84,12 @@ public class MenuPanel extends JPanel  {
 			}
 		});
 		
-		
-		
 		JLabel Titulo = new JLabel("New label");
 		Titulo.setForeground(new Color(64, 128, 128));
 		Titulo.setBackground(new Color(0, 128, 0));
 		Titulo.setBounds(430, 11, 400, 255);
 		
-		Titulo.setIcon(new ImageIcon(ImageUtil.resizeImage(400, 228, ImageUtil.getStream("main/resources/Titulo.png"))));
+		Titulo.setIcon(new ImageIcon(ImageUtil.resizeImage(400, 228, FrameUtil.getStream("main/resources/Titulo.png"))));
 		panel.add(Titulo);
 		
 		JButton Musica = new JButton("On");
@@ -91,32 +98,23 @@ public class MenuPanel extends JPanel  {
 		Musica.setBorder(border);
 		Musica.setBackground(new Color(0, 0, 0));
 		Musica.setBounds(11, 516, 60, 60);
-		File audioFile = new File("Tema.wav");
-		
-		
-		
-		
 		try {
-            // Crear un objeto Clip y cargar el audio
-            clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(audioFile));
-            clip.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    
+			backgroundSound = instanceMain.getSoundHandler().startSound(AudioSystem.getAudioInputStream(FrameUtil.getStream("main/resources/sounds/background/Tema.wav")), 0.5f);
+		} catch (UnsupportedAudioFileException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		Musica.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == Musica) {
+					Clip clip = backgroundSound.getClip();
 		            if (clip.isActive()) {
 		                clip.stop();
-		              
-		                Musica.setText("off");
-		                
+		                Musica.setText("Off");
 		            } else {
-		                clip.loop(Clip.LOOP_CONTINUOUSLY);
+		            	clip.start();
 		                Musica.setText("On");
 		               
 		            }
@@ -132,19 +130,15 @@ public class MenuPanel extends JPanel  {
 		Fondo.setForeground(new Color(255, 255, 255));
 		Fondo.setBackground(new Color(255, 255, 255));
 		Fondo.setBounds(0, 0, 1280, 720);
-		Fondo.setIcon(new ImageIcon("Fondo.gif"));
+		Fondo.setIcon(ImageUtil.getSourceImageIcon(getClass().getResource("/main/resources/Fondo.gif")));
 		panel.add(Fondo);
 		
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setBounds(11, 492, 46, 14);
 		panel.add(lblNewLabel);
 		
-		
-		
 		panel.repaint();
 		panel.revalidate();
-		
-		
 		
 	}
 	
