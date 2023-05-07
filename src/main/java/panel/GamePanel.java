@@ -93,7 +93,7 @@ public class GamePanel extends JPanel {
 		gameLoop = threadGameHandler.startThread(new GameThread(threadGameHandler));
 		
 		try {
-			backgroundTrack = instanceMain.getSoundHandler().startSound(AudioSystem.getAudioInputStream(FrameUtil.getStream("main/resources/sounds/background/track1.wav")), 0.5f);
+			backgroundTrack = instanceMain.getSoundHandler().startSound(AudioSystem.getAudioInputStream(FrameUtil.getStream("main/resources/sounds/background/track1.wav")), -2f);
 		} catch (UnsupportedAudioFileException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
