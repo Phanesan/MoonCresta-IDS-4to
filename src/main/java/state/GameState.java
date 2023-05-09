@@ -15,32 +15,29 @@ import main.java.graphics.objects.Shot;
 public class GameState implements Updateable,Drawable{
 	
 	private Player player;
-	private ArrayList <Shot> handler;
+	private ArrayList <MovingObject> handler;
 	
 	public GameState() {
 		handler = new ArrayList<>();
 		player = new Player(this, Assets.PLAYER, new Vector2D(640, 640),7);
+		handler.add(player);
 	}
 
 	@Override
 	public void draw(Graphics g) {
-		player.draw(g);
 		for(int i = 0; i < handler.size(); i++) {
-			Shot shot = (Shot) handler.get(i);
-			shot.draw(g);
+			handler.get(i).draw(g);
 		}
 	}
 
 	@Override
 	public void update() {
-		player.update();
 		for(int i = 0; i < handler.size(); i++) {
-			Shot shot = (Shot) handler.get(i);
-			shot.update();
+			handler.get(i).update();
 		}
 	}
 
-	public ArrayList<Shot> getHandler() {
+	public ArrayList<MovingObject> getHandler() {
 		return handler;
 	}
 	
