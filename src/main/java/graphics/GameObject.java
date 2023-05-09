@@ -24,4 +24,8 @@ public abstract class GameObject {
 		this.position = position;
 	}
 	
+	public Vector2D getCenter() {
+		return new Vector2D(position.x+TEXTURE.getWidth()/2,position.y+TEXTURE.getHeight()/2);
+	}
+	
 }
