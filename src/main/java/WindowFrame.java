@@ -129,6 +129,7 @@ public class WindowFrame extends JFrame implements Runnable{
 		// Fondo
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
+		g.drawImage(Assets.BACKGROUND_GAME,0,0,null);
 		
 		// METODOS DRAW //
 		gameState.draw(g);

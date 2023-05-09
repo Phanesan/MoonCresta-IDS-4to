@@ -13,7 +13,7 @@ public class GameState implements Updateable,Drawable{
 	private Player player;
 	
 	public GameState() {
-		player = new Player(Assets.PLAYER, new Vector2D(640, 640));
+		player = new Player(Assets.PLAYER, new Vector2D(640, 640),7);
 	}
 
 	@Override

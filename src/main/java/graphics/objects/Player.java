@@ -3,25 +3,26 @@ package main.java.graphics.objects;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import main.java.Drawable;
 import main.java.Key;
+import main.java.Updateable;
 import main.java.Vector2D;
 import main.java.graphics.GameObject;
+import main.java.graphics.MovingObject;
 
-public class Player extends GameObject {
+public class Player extends MovingObject implements Updateable,Drawable{
 	
-	private static final int speed = 10;
-	
-	public Player(BufferedImage texture, Vector2D position) {
-		super(texture, position);
+	public Player(BufferedImage texture, Vector2D position, int speed) {
+		super(texture, position, speed);
 	}
 
 	@Override
 	public void update() {
 		if(Key.LEFT) {
-			getPosition().x-=speed;
+			getPosition().minusX(SPEED);
 		}
 		if(Key.RIGHT) {
-			getPosition().x+=speed;
+			getPosition().addX(SPEED);
 		}
 	}
 

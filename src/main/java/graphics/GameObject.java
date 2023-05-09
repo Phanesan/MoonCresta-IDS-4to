@@ -6,7 +6,7 @@ import main.java.Drawable;
 import main.java.Updateable;
 import main.java.Vector2D;
 
-public abstract class GameObject implements Updateable,Drawable {
+public abstract class GameObject {
 	
 	public final BufferedImage TEXTURE;
 	private Vector2D position;
