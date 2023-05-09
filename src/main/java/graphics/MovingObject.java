@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 
 import main.java.Vector2D;
 
-public class MovingObject extends GameObject {
+public abstract class MovingObject extends GameObject {
 
 	public final int SPEED;
 	
@@ -13,4 +13,5 @@ public class MovingObject extends GameObject {
 		super(texture, position);
 		this.SPEED = speed;
 	}
+	
 }

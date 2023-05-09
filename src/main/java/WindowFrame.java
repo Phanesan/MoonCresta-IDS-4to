@@ -110,7 +110,6 @@ public class WindowFrame extends JFrame implements Runnable{
 		// METODOS UPDATE //
 		key.update();
 		gameState.update();
-		////////////////////
 		
 		// CONDICIONES
 		
