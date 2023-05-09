@@ -3,25 +3,42 @@ package main.java;
 import java.awt.EventQueue;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferStrategy;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.BorderLayout;
 
-import main.java.panel.GamePanel;
-import main.java.panel.MenuPanel;
-import main.java.utils.FrameUtil;
+import main.java.graphics.Assets;
+import main.java.state.GameState;
+
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Dimension;
+
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+
 import javax.swing.BoxLayout;
 
-public class WindowFrame extends JFrame {
-
-	private JPanel contentPane;
-	private SoundHandler soundHandler;
-	private KeyEvent lastKey;
-
+public class WindowFrame extends JFrame implements Runnable{
+	
+	private static final int WIDTH = 1280;
+	private static final int HEIGHT = 720;
+	private static final String windowName = "MoonCresta";
+	private static volatile boolean running = false;
+	private static final Canvas canvas = new Canvas();
+	private static int APS = 0;
+	private static int FPS = 0;
+	
+	private Thread thread;
+	private Key key;
+	private BufferStrategy bs;
+	private Graphics g;
+	private GameState gameState;
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -36,55 +53,112 @@ public class WindowFrame extends JFrame {
 	}
 
 	public WindowFrame() {
-		soundHandler = new SoundHandler(this);
+		canvas.setPreferredSize(new Dimension(WIDTH,HEIGHT));
+		canvas.setMinimumSize(new Dimension(WIDTH,HEIGHT));
+		canvas.setMaximumSize(new Dimension(WIDTH,HEIGHT));
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(1280,720);
+		//setTitle(windowName);
+		setIconImage(Assets.LOGO);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
+		setLayout(new BorderLayout());
+		add(canvas, BorderLayout.CENTER);
+		pack();
 		setLocationRelativeTo(null);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(new BorderLayout(0, 0));
 		
-		FrameUtil.changePanel(this, new MenuPanel(this));
+		start();
+	}
+
+	@Override
+	public void run() {
+		canvas.requestFocus();
 		
-		addKeyListener(new KeyListener() {
+		final int NPS = 1000000000;
+		final byte APS_TARGET = 60;
+		final double NPF = NPS / APS_TARGET;
+		
+		long startFrame = System.nanoTime();
+		long frameCont = System.nanoTime();
+		
+		double timeElapsed;
+		double delta = 0;
+		while(running) { // EL HILO EMPEZARA A REPETIRSE A LA VELOCIDAD DE LA PC
+			final long startLoop = System.nanoTime();
+			timeElapsed = startLoop - startFrame;
+			startFrame = startLoop;
+			delta+=timeElapsed/NPF;
 			
-			@Override
-			public void keyTyped(KeyEvent e) {
-				
-				
-			}
+			if(delta >= 1) { // AQUI SE EJECUTARA CADA QUE PASE UN FRAME POR SEGUNDO
+				update();				
+				delta--;
+			}			
+			draw();
 			
-			@Override
-			public void keyReleased(KeyEvent e) {
+			if(System.nanoTime() - frameCont > NPS) {
+				setTitle(windowName + " | APS:" + APS + " FPS: " + FPS);
+				APS = 0;
+				FPS = 0;
 				
+				frameCont = System.nanoTime();
 			}
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				lastKey = e;
-			}
-		});
+		}
 	}
 	
-	public KeyEvent getLastKey() {
-		return lastKey;
-	}
-
-	public void setLastKey(KeyEvent lastKey) {
-		this.lastKey = lastKey;
-	}
-
-	public SoundHandler getSoundHandler() {
-		return soundHandler;
-	}
-	
-	public JPanel getContentPanel() {
-		return contentPane;
+	public void update() {
+		APS++;
+		
+		// METODOS UPDATE //
+		key.update();
+		gameState.update();
+		////////////////////
+		
+		// CONDICIONES
+		
 	}
 	
+	public void draw() {
+		FPS++;
+		bs = canvas.getBufferStrategy();
+		
+		if(bs == null) {
+			canvas.createBufferStrategy(3);
+			return;
+		}
+		g = bs.getDrawGraphics();
+		
+		// Fondo
+		g.setColor(Color.black);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		// METODOS DRAW //
+		gameState.draw(g);
+		//////////////////
+		
+		g.dispose();
+		bs.show();
+	}
 	
+	public synchronized void start() {
+		running = true;
+		
+		// INICIA CLASES
+		thread = new Thread(this);
+		key = new Key();
+		gameState = new GameState();
+		
+		// LISTENERS
+		canvas.addKeyListener(key);
+		
+		thread.start();
+	}
+	
+	public synchronized void stop() {
+		running = false;
+		
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 }
