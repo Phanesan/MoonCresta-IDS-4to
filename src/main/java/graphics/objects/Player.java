@@ -15,13 +15,11 @@ import main.java.state.GameState;
 
 public class Player extends MovingObject implements Updateable,Drawable{
 	
-	private GameState gameState;
 	private double lastTime, time;
 	public int shotSpeed;
 	
 	public Player(GameState gameState, BufferedImage texture, Vector2D position, int speed) {
-		super(texture, position, speed);
-		this.gameState = gameState;
+		super(gameState, texture, position, speed);
 		time = 0;
 		lastTime = System.currentTimeMillis();
 		shotSpeed = 250;
@@ -38,14 +36,23 @@ public class Player extends MovingObject implements Updateable,Drawable{
 			getPosition().addX(SPEED);
 		}
 		if(Key.SPACE && time > shotSpeed) {
-			gameState.getHandler().add(new Shot(Assets.SHOT, getCenter(), 12));
+			gameState.getHandler().add(new Shot(gameState, Assets.SHOT, getCenter(), 12));
 			time = 0;
 		}
+		collidesWith();
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		g.drawImage(TEXTURE, (int)getPosition().x, (int)getPosition().y, null);
+	}
+
+	@Override
+	public void triggerCollition(MovingObject movingObject) {
+		// TODO Auto-generated method stub
+		if(movingObject instanceof Enemy ) {
+			kill();
+		}
 	}
 
 }

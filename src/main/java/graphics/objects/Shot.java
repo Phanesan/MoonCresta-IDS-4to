@@ -5,11 +5,12 @@ import java.awt.image.BufferedImage;
 
 import main.java.Vector2D;
 import main.java.graphics.MovingObject;
+import main.java.state.GameState;
 
 public class Shot extends MovingObject {
 
-	public Shot(BufferedImage texture, Vector2D position, int speed) {
-		super(texture, position, speed);
+	public Shot(GameState gameState, BufferedImage texture, Vector2D position, int speed) {
+		super(gameState, texture, position, speed);
 	}
 
 	@Override
@@ -20,6 +21,15 @@ public class Shot extends MovingObject {
 	@Override
 	public void update() {
 		getPosition().y -= SPEED;
+	}
+
+	@Override
+	public void triggerCollition(MovingObject movingObject) {
+		// TODO Auto-generated method stub
+		if(movingObject instanceof Enemy) {
+			kill();
+			movingObject.kill();
+		}
 	}
 
 }
