@@ -14,7 +14,7 @@ public abstract class GameObject implements Updateable, Drawable{
 	
 	public final BufferedImage TEXTURE;
 	private Vector2D position;
-	protected Rectangle hitBox;
+	public Rectangle hitBox;
 	protected GameState gameState;
 	
 	public GameObject(GameState gameState, BufferedImage texture, Vector2D position) {
@@ -36,20 +36,9 @@ public abstract class GameObject implements Updateable, Drawable{
 		return new Vector2D(position.x+TEXTURE.getWidth()/2,position.y+TEXTURE.getHeight()/2);
 	}
 	
-	public void collidesWith() {
-		ArrayList<MovingObject> movingObject = gameState.getHandler();
-		for(int i = 0; i < movingObject.size(); i++) {
-			if(hitBox.intersects(movingObject.get(i).hitBox)) {
-				triggerCollition(movingObject.get(i));
-			}
-		}
-	}
-	
 	public void kill() {
 		gameState.getHandler().remove(this);
 	}
-	
-	public abstract void triggerCollition(MovingObject movingObject);
 	
 	public abstract void update();
 	

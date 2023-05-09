@@ -16,4 +16,9 @@ public abstract class MovingObject extends GameObject implements Updateable,Draw
 		this.SPEED = speed;
 	}
 	
+	public void updateCollision() {
+		hitBox.x = (int) getPosition().x;
+		hitBox.y = (int) getPosition().y;
+	}
+	
 }
