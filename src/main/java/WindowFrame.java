@@ -32,6 +32,7 @@ public class WindowFrame extends JFrame implements Runnable{
 	private static final Canvas canvas = new Canvas();
 	private static int APS = 0;
 	private static int FPS = 0;
+	public final static int FPS_TARGET = 60;
 	
 	private Thread thread;
 	private Key key;
@@ -74,7 +75,7 @@ public class WindowFrame extends JFrame implements Runnable{
 		canvas.requestFocus();
 		
 		final int NPS = 1000000000;
-		final byte APS_TARGET = 60;
+		final byte APS_TARGET = FPS_TARGET;
 		final double NPF = NPS / APS_TARGET;
 		
 		long startFrame = System.nanoTime();

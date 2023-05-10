@@ -20,8 +20,8 @@ public class Player extends MovingObject implements Updateable,Drawable,Collisio
 	private double lastTime, time;
 	public static final int SHOOT_SPEED = 450;
 	
-	public Player(GameState gameState, BufferedImage texture, Vector2D position, int speed) {
-		super(gameState, texture, position, speed);
+	public Player(GameState gameState, BufferedImage texture, Vector2D position, int speed, int MAX_HEALTH) {
+		super(gameState, texture, position, speed, MAX_HEALTH);
 		time = 0;
 		lastTime = System.currentTimeMillis();
 	}
@@ -53,7 +53,7 @@ public class Player extends MovingObject implements Updateable,Drawable,Collisio
 			}
 		}
 		if(Key.SPACE && time > SHOOT_SPEED) {
-			gameState.getHandler().add(new Shot(gameState, Assets.SHOT, getCenter(), 12));
+			gameState.getHandler().add(new Shot(gameState, Assets.SHOT, getCenter(), 12, 1));
 			time = 0;
 		}
 		updateCollision();

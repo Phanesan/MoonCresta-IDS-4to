@@ -9,11 +9,15 @@ import main.java.state.GameState;
 
 public abstract class MovingObject extends GameObject implements Updateable,Drawable {
 
-	public final int SPEED;
+	public final float SPEED;
+	public final int MAX_HEALTH;
+	public int HEALTH;
 	
-	public MovingObject(GameState gameState, BufferedImage texture, Vector2D position, int speed) {
+	public MovingObject(GameState gameState, BufferedImage texture, Vector2D position, float speed, int MAX_HEALTH) {
 		super(gameState, texture, position);
 		this.SPEED = speed;
+		this.MAX_HEALTH = MAX_HEALTH;
+		this.HEALTH = MAX_HEALTH;
 	}
 	
 	public void updateCollision() {
