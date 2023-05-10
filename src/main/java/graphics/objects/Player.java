@@ -18,13 +18,12 @@ import main.java.state.GameState;
 public class Player extends MovingObject implements Updateable,Drawable,Collisionable{
 	
 	private double lastTime, time;
-	public int shotSpeed;
+	public static final int SHOOT_SPEED = 450;
 	
 	public Player(GameState gameState, BufferedImage texture, Vector2D position, int speed) {
 		super(gameState, texture, position, speed);
 		time = 0;
 		lastTime = System.currentTimeMillis();
-		shotSpeed = 450;
 	}
 
 	@Override
@@ -34,14 +33,26 @@ public class Player extends MovingObject implements Updateable,Drawable,Collisio
 		if(Key.LEFT) {
 			ArrayList<Wall> handler = gameState.getWallHandler();
 			for(int i = 0; i < handler.size(); i++) {
-				handler.get(i).isCollition(getPosition(), this);
+				Vector2D newPosition = new Vector2D(getPosition().x,getPosition().y);
+				newPosition.minusX(SPEED);
+				boolean flag = handler.get(i).isCollition(newPosition, this);
+				if(!flag) {
+					getPosition().minusX(SPEED);					
+				}
 			}
-			getPosition().minusX(SPEED);
 		}
 		if(Key.RIGHT) {
-			getPosition().addX(SPEED);
+			ArrayList<Wall> handler = gameState.getWallHandler();
+			for(int i = 0; i < handler.size(); i++) {
+				Vector2D newPosition = new Vector2D(getPosition().x,getPosition().y);
+				newPosition.addX(SPEED);
+				boolean flag = handler.get(i).isCollition(newPosition, this);
+				if(!flag) {
+					getPosition().addX(SPEED);					
+				}
+			}
 		}
-		if(Key.SPACE && time > shotSpeed) {
+		if(Key.SPACE && time > SHOOT_SPEED) {
 			gameState.getHandler().add(new Shot(gameState, Assets.SHOT, getCenter(), 12));
 			time = 0;
 		}

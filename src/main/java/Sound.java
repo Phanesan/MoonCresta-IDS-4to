@@ -1,6 +1,7 @@
 package main.java;
 
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineEvent.Type;
 import javax.sound.sampled.LineUnavailableException;
 
 import main.java.graphics.Loader;
@@ -37,6 +38,10 @@ public class Sound implements Updateable{
 		sound.stop();
 		sound.flush();
 		sound.setMicrosecondPosition(0);
+	}
+	
+	public void setSound(float volume) {
+		
 	}
 
 	@Override

@@ -17,19 +17,15 @@ public class Wall extends GameObject {
 
 	public Wall(GameState gameState, Dimension dimension, Vector2D position) {
 		super(gameState, dimension, position);
-//		this.hitBox.width = dimension.width;
-//		this.hitBox.height = dimension.height;
 	}
 
 	public boolean isCollition(Vector2D newPosition, Player player) {
-		ArrayList<MovingObject> movingObject = gameState.getHandler();
+		ArrayList<Wall> movingObject = gameState.getWallHandler();
 		for(int i = 0; i < movingObject.size(); i++) {
-			MovingObject obj = movingObject.get(i);
-			if(obj instanceof Player) {
-				Rectangle posTemp = new Rectangle((int) newPosition.x,(int) newPosition.y,obj.hitBox.width,hitBox.height);
-				if(posTemp.intersects(hitBox)) {
-					return true;
-				}
+			Wall obj = movingObject.get(i);
+			Rectangle newHitBoxPlayer = new Rectangle((int)newPosition.x,(int)newPosition.y,player.hitBox.width,player.hitBox.height);
+			if(newHitBoxPlayer.intersects(obj.hitBox)) {
+				return true;
 			}
 		}
 		return false;

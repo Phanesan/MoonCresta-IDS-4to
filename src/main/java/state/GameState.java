@@ -27,8 +27,9 @@ public class GameState implements Updateable,Drawable{
 	public GameState() {
 		handler = new ArrayList<>();
 		wallHandler = new ArrayList<>();
-		wallHandler.add(new Wall(this,new Dimension(0,WindowFrame.HEIGHT),new Vector2D(0,0)));
-		player = new Player(this, Assets.PLAYER, new Vector2D(640, 640),7);
+		wallHandler.add(new Wall(this,new Dimension(5,WindowFrame.HEIGHT),new Vector2D(0,0)));
+		wallHandler.add(new Wall(this,new Dimension(5,WindowFrame.HEIGHT),new Vector2D(WindowFrame.WIDTH-5,0)));
+		player = new Player(this, Assets.PLAYER, new Vector2D(640, 640),6);
 		handler.add(player);
 		
 		background = new Sound(Assets.BACKGROUND_OST);
@@ -39,7 +40,12 @@ public class GameState implements Updateable,Drawable{
 	public void draw(Graphics g) {
 		for(int i = 0; i < handler.size(); i++) {
 			handler.get(i).draw(g);
+			//handler.get(i).drawHitBox(g);
 		}
+		
+//		for(int i = 0; i < wallHandler.size(); i++) {
+//			wallHandler.get(i).drawHitBox(g);
+//		}
 	}
 
 	@Override

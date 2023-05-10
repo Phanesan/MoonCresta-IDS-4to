@@ -1,5 +1,6 @@
 package main.java.graphics;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -46,6 +47,11 @@ public abstract class GameObject {
 	
 	public void kill() {
 		gameState.getHandler().remove(this);
+	}
+	
+	public void drawHitBox(Graphics g) {
+		g.setColor(Color.YELLOW);
+		g.drawRect(hitBox.x, hitBox.y, hitBox.width, hitBox.height);
 	}
 	
 }
