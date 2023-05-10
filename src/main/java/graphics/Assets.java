@@ -12,6 +12,7 @@ public abstract class Assets {
 	public static final BufferedImage SHOT = Loader.imageLoader("/main/resources/Disparo.png");
 	public static final BufferedImage BACKGROUND_GAME = Loader.imageLoader("/main/resources/background_game.png");
 	public static final BufferedImage ENEMY1 = Loader.imageLoader("/main/resources/enemy1.png");
+	public static final BufferedImage SHOT_ENEMY = Loader.imageLoader("/main/resources/DisparoEnemigo.png");
 	
 	// SONIDOS
 	
