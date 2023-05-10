@@ -32,6 +32,10 @@ public class Player extends MovingObject implements Updateable,Drawable,Collisio
 		time += System.currentTimeMillis() - lastTime;
 		lastTime = System.currentTimeMillis();
 		if(Key.LEFT) {
+			ArrayList<Wall> handler = gameState.getWallHandler();
+			for(int i = 0; i < handler.size(); i++) {
+				handler.get(i).isCollition(getPosition(), this);
+			}
 			getPosition().minusX(SPEED);
 		}
 		if(Key.RIGHT) {

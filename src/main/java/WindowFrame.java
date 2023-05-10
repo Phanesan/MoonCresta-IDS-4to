@@ -25,8 +25,8 @@ import javax.swing.BoxLayout;
 
 public class WindowFrame extends JFrame implements Runnable{
 	
-	private static final int WIDTH = 1280;
-	private static final int HEIGHT = 720;
+	public static final int WIDTH = 1280;
+	public static final int HEIGHT = 720;
 	private static final String windowName = "MoonCresta";
 	private static volatile boolean running = false;
 	private static final Canvas canvas = new Canvas();
