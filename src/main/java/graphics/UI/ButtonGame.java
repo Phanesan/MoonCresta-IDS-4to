@@ -31,12 +31,6 @@ public class ButtonGame implements Updateable,Drawable{
 		this.mouseOutImg = mouseOutImg;
 		boundingBox = new Rectangle(x,y,mouseInImg.getWidth(),mouseInImg.getHeight());
 		this.text = text;
-		listener = new ClickListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		};
 	}
 
 	@Override
@@ -70,7 +64,7 @@ public class ButtonGame implements Updateable,Drawable{
 		}
 		
 		if(mouseIn && Mouse.M1) {
-			listener.actionPerformed(listener);
+			listener.actionPerformed();
 		}
 	}
 	

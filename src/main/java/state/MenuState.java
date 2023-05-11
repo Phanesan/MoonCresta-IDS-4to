@@ -28,7 +28,7 @@ public class MenuState extends State{
 		startButton.addClickListener(new ClickListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed() {
 				// TODO Auto-generated method stub
 				
 			}});
@@ -37,16 +37,15 @@ public class MenuState extends State{
 		exitButton.addClickListener(new ClickListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed() {
 				// TODO Auto-generated method stub
 				System.exit(0);
-				System.out.println("pitos adaddssdd");
 			}});
 		
 		Sounds.addClickListener(new ClickListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed() {
 				// TODO Auto-generated method stub
 				
 				Tema.setVolume(-230);
