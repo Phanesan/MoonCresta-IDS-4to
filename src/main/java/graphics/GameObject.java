@@ -45,8 +45,10 @@ public abstract class GameObject {
 		return new Vector2D(position.x+TEXTURE.getWidth()/2,position.y+TEXTURE.getHeight()/2);
 	}
 	
-	public void kill() {
-		onDeath();
+	public void kill(boolean killedByPlayer) {
+		if(killedByPlayer) {
+			onDeath();
+		}
 		gameState.getHandler().remove(this);
 	}
 	

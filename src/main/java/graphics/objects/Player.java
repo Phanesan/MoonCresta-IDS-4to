@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import main.java.Collisionable;
 import main.java.Drawable;
 import main.java.Key;
+import main.java.Sound;
 import main.java.Updateable;
 import main.java.Vector2D;
 import main.java.exception.OutOfRangeCanonException;
@@ -56,6 +57,9 @@ public class Player extends MovingObject implements Updateable,Drawable,Collisio
 			}
 		}
 		if(Key.SPACE && time > SHOOT_SPEED) {
+			Sound shotSound = new Sound(Assets.SHOT_LASER);
+			shotSound.setVolume(-20f);
+			shotSound.start();
 			switch(CANON_TIER) {
 				case 1:
 					gameState.getHandler().add(new Shot(gameState, Assets.SHOT, getCenter(), 12, 1));
@@ -89,7 +93,10 @@ public class Player extends MovingObject implements Updateable,Drawable,Collisio
 						System.out.println("downgrade");
 					} catch (OutOfRangeCanonException e) {
 						System.out.println("muerto");
-						kill();
+						Sound death = new Sound(Assets.DEATH);
+						death.setVolume(-10f);
+						death.start();
+						kill(false);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -107,6 +114,9 @@ public class Player extends MovingObject implements Updateable,Drawable,Collisio
 		if(CANON_TIER < 3) {
 			SHOOT_SPEED-=150; 
 			CANON_TIER++;
+			Sound upgrade = new Sound(Assets.UPGRADE);
+			upgrade.setVolume(-10f);
+			upgrade.start();
 		} else
 			throw new OutOfRangeCanonException();
 	}
@@ -115,6 +125,9 @@ public class Player extends MovingObject implements Updateable,Drawable,Collisio
 		if(CANON_TIER > 1) {
 			SHOOT_SPEED+=150;
 			CANON_TIER--;
+			Sound downgrade = new Sound(Assets.DOWNGRADE);
+			downgrade.setVolume(-10f);
+			downgrade.start();
 		} else
 			throw new OutOfRangeCanonException();
 	}
