@@ -5,7 +5,5 @@ import java.awt.event.ActionListener;
 
 public abstract class ClickListener {
 
-	public void actionPerformed() {
-		
-	}
+	public abstract void actionPerformed();
 }

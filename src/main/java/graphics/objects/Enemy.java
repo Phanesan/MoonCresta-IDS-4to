@@ -70,16 +70,6 @@ public class Enemy extends MovingObject implements Updateable,Drawable,Collision
 				
 			}
 		}
-		if(Util.randomBoolean(Spawner.DROP_RATE_KILL_ALL)) {
-			System.out.println("KILL ALL!!!!!!!!!!!");
-			ArrayList<MovingObject> movingObject = gameState.getHandler();
-			for(int i = 0; i < movingObject.size(); i++) {
-				MovingObject obj = movingObject.get(i);
-				if(obj instanceof Enemy) {
-					obj.kill(true);
-				}
-			}
-		}
 	}
 
 }

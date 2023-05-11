@@ -15,6 +15,8 @@ import main.java.Vector2D;
 import main.java.WindowFrame;
 import main.java.graphics.Assets;
 import main.java.graphics.MovingObject;
+import main.java.graphics.UI.ButtonGame;
+import main.java.graphics.UI.ClickListener;
 import main.java.graphics.objects.Enemy;
 import main.java.graphics.objects.HUD;
 import main.java.graphics.objects.Player;
@@ -30,6 +32,7 @@ public class GameState extends State{
 	private Sound background;
 	private Spawner spawner;
 	public boolean isDeath;
+	private ButtonGame exitButton;
 	
 	public GameState() {
 		handler = new ArrayList<>();
@@ -37,6 +40,14 @@ public class GameState extends State{
 		spawner = new Spawner(this);
 		hud = new HUD();
 		isDeath = false;
+		
+		exitButton = new ButtonGame(Assets.BUTTON_OUT, Assets.BUTTON_IN, "SALIR", WindowFrame.WIDTH/2-Assets.BUTTON_IN.getWidth()/2 , 550);
+		exitButton.addClickListener(new ClickListener() {
+			@Override
+			public void actionPerformed() {
+				State.changeState(new MenuState());
+			}
+		});
 		
 		wallHandler.add(new Wall(this,new Dimension(5,WindowFrame.HEIGHT),new Vector2D(0,0)));
 		wallHandler.add(new Wall(this,new Dimension(5,WindowFrame.HEIGHT),new Vector2D(WindowFrame.WIDTH-5,0)));
@@ -57,12 +68,12 @@ public class GameState extends State{
 		}
 		spawner.draw(g);
 		hud.draw(g);
-		
 		if(isDeath) {
 			g.drawImage(Assets.BLACKSCREEN,0,0,null);
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Arial", Font.BOLD, 70));
 			g.drawString("GAMEOVER",425, 360);
+			exitButton.draw(g);
 			background.stopLoop();
 		}
 	}
@@ -75,6 +86,9 @@ public class GameState extends State{
 		background.update();
 		spawner.update();
 		hud.update();
+		if(isDeath) {			
+			exitButton.update();
+		}
 	}
 
 	public ArrayList<MovingObject> getHandler() {

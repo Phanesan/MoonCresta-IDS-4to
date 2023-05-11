@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+import main.java.Mouse;
 import main.java.Sound;
 import main.java.WindowFrame;
 import main.java.graphics.Assets;
@@ -18,10 +19,9 @@ public class MenuState extends State{
 	
 	public MenuState() {
 		listButton = new ArrayList<>();
-		
 		ButtonGame startButton = new ButtonGame(Assets.BUTTON_OUT, Assets.BUTTON_IN, "INICIAR", WindowFrame.WIDTH/2-Assets.BUTTON_IN.getWidth()/2 , 350);
+		
 		ButtonGame exitButton = new ButtonGame(Assets.BUTTON_OUT, Assets.BUTTON_IN, "SALIR", WindowFrame.WIDTH/2-Assets.BUTTON_IN.getWidth()/2 , 440);
-		ButtonGame Sounds = new ButtonGame(Assets.SOUND_ON, Assets.SOUND_OFF, "", WindowFrame.WIDTH/9-Assets.BUTTON_IN.getWidth()/2 , 600);
 		
 		Sound Tema = new Sound(Assets.MENU);
 		Tema.start();
@@ -30,8 +30,8 @@ public class MenuState extends State{
 
 			@Override
 			public void actionPerformed() {
-				// TODO Auto-generated method stub
-				
+				State.changeState(new GameState());
+				Tema.stopLoop();
 			}});
 		
 		
@@ -43,29 +43,8 @@ public class MenuState extends State{
 				System.exit(0);
 			}});
 		
-		Sounds.addClickListener(new ClickListener() {
-
-			@Override
-			public void actionPerformed() {
-				// TODO Auto-generated method stub
-				
-				mute=!mute;
-				System.out.println(mute);
-				
-			if(mute==true) {
-				
-				Tema.setVolume(-80);
-			}else {
-				
-				Tema.setVolume(-5);
-				
-			}
-			}});
-		
-		
 		listButton.add(startButton);
 		listButton.add(exitButton);
-		listButton.add(Sounds);
 	}
 	
 	@Override

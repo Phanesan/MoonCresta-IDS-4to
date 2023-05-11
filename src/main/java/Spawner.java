@@ -22,7 +22,6 @@ public class Spawner implements Updateable,Drawable {
 	public static int enemiesKilled = 0;
 	
 	public static double DROP_RATE_UPGRADE = 2.9;
-	public static double DROP_RATE_KILL_ALL = 0.8;
 	
 	private int fps = 0;
 	
