@@ -3,12 +3,17 @@ package main.java.graphics.objects;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Random;
 
 import main.java.Collisionable;
 import main.java.Drawable;
+import main.java.Spawner;
 import main.java.Updateable;
+import main.java.Util;
 import main.java.Vector2D;
 import main.java.WindowFrame;
+import main.java.exception.OutOfRangeCanonException;
 import main.java.graphics.Assets;
 import main.java.graphics.GameObject;
 import main.java.graphics.MovingObject;
@@ -28,6 +33,10 @@ public class Enemy extends MovingObject implements Updateable,Drawable,Collision
 		updateCollision();
 		getPosition().y+=SPEED;
 		
+		if(position.y >= WindowFrame.HEIGHT+50) {
+			kill();
+		}
+		
 		FPS++;
 		if(FPS >= WindowFrame.FPS_TARGET*3) {
 			
@@ -46,6 +55,31 @@ public class Enemy extends MovingObject implements Updateable,Drawable,Collision
 	@Override
 	public void collidesWith() {
 		
+	}
+
+	@Override
+	public void onDeath() {
+		Spawner.enemiesKilled++;
+		Player.score += 25;
+		
+		if(Util.randomBoolean(Spawner.DROP_RATE_UPGRADE)) {
+			try {
+				gameState.player.upgradeCanon();
+				System.out.println("upgrade!");
+			} catch (OutOfRangeCanonException e) {
+				
+			}
+		}
+		if(Util.randomBoolean(Spawner.DROP_RATE_KILL_ALL)) {
+			System.out.println("KILL ALL!!!!!!!!!!!");
+			ArrayList<MovingObject> movingObject = gameState.getHandler();
+			for(int i = 0; i < movingObject.size(); i++) {
+				MovingObject obj = movingObject.get(i);
+				if(obj instanceof Enemy) {
+					obj.kill();
+				}
+			}
+		}
 	}
 
 }

@@ -14,10 +14,15 @@ public class Spawner implements Updateable,Drawable {
 	private Random random;
 	private int numEnemyPerWave = 0;
 	private int spawn = 0;
-	private int constAverageTimeToSpawn = 7;
-	private int averageTimeToSpawn;
+	private int averageTimeToSpawn = 12;
 	private int secondsToSpawn = 0;
 	private int enemiesSpawned = 0;
+	private int spawnPerWaveMax = 2;
+	private int spawnPerWaveMin = 1;
+	public static int enemiesKilled = 0;
+	
+	public static double DROP_RATE_UPGRADE = 2.9;
+	public static double DROP_RATE_KILL_ALL = 0.8;
 	
 	private int fps = 0;
 	
@@ -33,7 +38,7 @@ public class Spawner implements Updateable,Drawable {
 		if(fps >= WindowFrame.FPS_TARGET) {
 			
 			if(secondsToSpawn >= averageTimeToSpawn) {
-				spawn = random.nextInt(3)+1;
+				spawn = random.nextInt(spawnPerWaveMin)+spawnPerWaveMax;
 				for(int i = 0; i < spawn; i++) {
 					int x;
 					do {
@@ -47,10 +52,7 @@ public class Spawner implements Updateable,Drawable {
 			
 			if(enemiesSpawned >= numEnemyPerWave) {
 				randomize();
-				System.out.println("test");
-				if(constAverageTimeToSpawn > 4) {
-					constAverageTimeToSpawn--;
-				}
+				System.out.println(averageTimeToSpawn);
 				enemiesSpawned = 0;
 			}
 			secondsToSpawn++;
@@ -63,10 +65,20 @@ public class Spawner implements Updateable,Drawable {
 	}
 	
 	public void randomize() {
+		if(averageTimeToSpawn > 5) {
+			averageTimeToSpawn--;
+			spawnPerWaveMax++;
+		} else {
+			spawnPerWaveMax = 8;
+			spawnPerWaveMin = 3;
+		}
 		
-		averageTimeToSpawn = random.nextInt(constAverageTimeToSpawn-2)+constAverageTimeToSpawn;
+		if(averageTimeToSpawn == 9) {
+			DROP_RATE_UPGRADE = 4;
+		}
+		System.out.println(spawnPerWaveMax + "-" + spawnPerWaveMin);
 		
-		numEnemyPerWave = random.nextInt(5)+10;
+		numEnemyPerWave = random.nextInt(5)+15;
 		
 	}
 	

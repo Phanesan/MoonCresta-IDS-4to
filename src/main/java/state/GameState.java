@@ -20,7 +20,7 @@ import main.java.graphics.objects.Wall;
 
 public class GameState implements Updateable,Drawable{
 	
-	private Player player;
+	public Player player;
 	private ArrayList <MovingObject> handler;
 	private ArrayList<Wall> wallHandler;
 	private Sound background;
@@ -34,7 +34,7 @@ public class GameState implements Updateable,Drawable{
 		wallHandler.add(new Wall(this,new Dimension(5,WindowFrame.HEIGHT),new Vector2D(0,0)));
 		wallHandler.add(new Wall(this,new Dimension(5,WindowFrame.HEIGHT),new Vector2D(WindowFrame.WIDTH-5,0)));
 		
-		player = new Player(this, Assets.PLAYER, new Vector2D(640, 640),6,200);
+		player = new Player(this, Assets.PLAYER, new Vector2D(640, 640),6,1);
 		handler.add(player);
 		
 		background = new Sound(Assets.BACKGROUND_OST);
@@ -47,7 +47,6 @@ public class GameState implements Updateable,Drawable{
 		for(int i = 0; i < handler.size(); i++) {
 			handler.get(i).draw(g);
 		}
-		
 		spawner.draw(g);
 	}
 

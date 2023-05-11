@@ -18,7 +18,7 @@ public class Loader {
 	
 	public static BufferedImage imageLoader(String path) {
 		try {
-			return ImageIO.read(Loader.class.getResource(path));
+			return ImageIO.read(Loader.class.getResourceAsStream(path));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

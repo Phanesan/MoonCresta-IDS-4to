@@ -13,27 +13,25 @@ import main.java.graphics.MovingObject;
 import main.java.state.GameState;
 
 public class Shot extends MovingObject implements Updateable,Drawable,Collisionable {
-
+	
 	public Shot(GameState gameState, BufferedImage texture, Vector2D position, int speed, int MAX_HEALTH) {
 		super(gameState, texture, position, speed, MAX_HEALTH);
-	}
-
-	@Override
-	public void draw(Graphics g) {
-		g.drawImage(TEXTURE, (int)getPosition().x - TEXTURE.getWidth()/2, (int)getPosition().y - TEXTURE.getHeight(), null);
-	}
-	
-	@Override
-	public void updateCollision() {
+		position.x -= texture.getWidth()/2;
+		position.y -= TEXTURE.getHeight();
 		hitBox.x = (int)getPosition().x - TEXTURE.getWidth()/2;
 		hitBox.y = (int)getPosition().y - TEXTURE.getHeight();
 	}
 
 	@Override
+	public void draw(Graphics g) {
+		g.drawImage(TEXTURE, (int)position.x, (int)position.y, null);
+	}
+
+	@Override
 	public void update() {
-		getPosition().y -= SPEED;
+		position.y -= SPEED;
 		collidesWith();
-		if(getPosition().y < -30) {
+		if(position.y < -30) {
 			kill();
 		}
 		updateCollision();
@@ -54,9 +52,14 @@ public class Shot extends MovingObject implements Updateable,Drawable,Collisiona
 					}
 					
 					kill();
-					
 				}
 			}
 		}
+	}
+
+	@Override
+	public void onDeath() {
+		// TODO Auto-generated method stub
+		
 	}
 }

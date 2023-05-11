@@ -58,7 +58,6 @@ public class WindowFrame extends JFrame implements Runnable{
 		canvas.setMinimumSize(new Dimension(WIDTH,HEIGHT));
 		canvas.setMaximumSize(new Dimension(WIDTH,HEIGHT));
 		
-		//setTitle(windowName);
 		setIconImage(Assets.LOGO);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);

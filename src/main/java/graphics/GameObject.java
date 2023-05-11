@@ -15,7 +15,7 @@ import main.java.state.GameState;
 public abstract class GameObject {
 	
 	public final BufferedImage TEXTURE;
-	private Vector2D position;
+	public Vector2D position;
 	public Rectangle hitBox;
 	protected GameState gameState;
 	
@@ -46,8 +46,11 @@ public abstract class GameObject {
 	}
 	
 	public void kill() {
+		onDeath();
 		gameState.getHandler().remove(this);
 	}
+	
+	public abstract void onDeath();
 	
 	public void drawHitBox(Graphics g) {
 		g.setColor(Color.YELLOW);

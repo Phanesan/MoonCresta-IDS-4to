@@ -8,6 +8,8 @@ import main.java.Collisionable;
 import main.java.Drawable;
 import main.java.Updateable;
 import main.java.Vector2D;
+import main.java.WindowFrame;
+import main.java.exception.OutOfRangeCanonException;
 import main.java.graphics.MovingObject;
 import main.java.state.GameState;
 
@@ -26,7 +28,7 @@ public class ShotEnemy extends MovingObject implements Updateable,Drawable,Colli
 	public void update() {
 		getPosition().y += SPEED;
 		collidesWith();
-		if(getPosition().y < -30) {
+		if(position.y >= WindowFrame.HEIGHT+50) {
 			kill();
 		}
 		updateCollision();
@@ -45,19 +47,28 @@ public class ShotEnemy extends MovingObject implements Updateable,Drawable,Colli
 			MovingObject obj = movingObject.get(i);
 			if(hitBox.intersects(obj.hitBox) && !(obj instanceof Shot) && !(obj instanceof Enemy)) {
 				if(obj instanceof Player) {
-					
-					obj.HEALTH-=50;
-					
-					if(obj.HEALTH <= 0) {						
+					Player player = (Player) obj;
+					try {
+						player.downgradeCanon();
+						System.out.println("downgrade");
+					} catch (OutOfRangeCanonException e) {
+						System.out.println("muerto");
 						obj.kill();
-						// metodo game over <------------------------------
+					} catch (Exception e) {
+						e.printStackTrace();
+					} finally {
+						// metodo Game Over
 					}
-					
 					kill();
-					
 				}
 			}
 		}
+	}
+
+	@Override
+	public void onDeath() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
