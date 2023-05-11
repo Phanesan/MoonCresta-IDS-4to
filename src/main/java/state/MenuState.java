@@ -14,6 +14,7 @@ public class MenuState extends State{
 	
 	private ButtonGame start;
 	private ArrayList<ButtonGame> listButton;
+	private boolean mute = false;
 	
 	public MenuState() {
 		listButton = new ArrayList<>();
@@ -48,8 +49,17 @@ public class MenuState extends State{
 			public void actionPerformed() {
 				// TODO Auto-generated method stub
 				
-				Tema.setVolume(-230);
+				mute=!mute;
+				System.out.println(mute);
 				
+			if(mute==true) {
+				
+				Tema.setVolume(-80);
+			}else {
+				
+				Tema.setVolume(-5);
+				
+			}
 			}});
 		
 		
