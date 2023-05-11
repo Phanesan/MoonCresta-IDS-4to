@@ -1,6 +1,8 @@
 package main.java.state;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,12 +29,14 @@ public class GameState implements Updateable,Drawable{
 	private HUD hud;
 	private Sound background;
 	private Spawner spawner;
+	public boolean isDeath;
 	
 	public GameState() {
 		handler = new ArrayList<>();
 		wallHandler = new ArrayList<>();
 		spawner = new Spawner(this);
 		hud = new HUD();
+		isDeath = false;
 		
 		wallHandler.add(new Wall(this,new Dimension(5,WindowFrame.HEIGHT),new Vector2D(0,0)));
 		wallHandler.add(new Wall(this,new Dimension(5,WindowFrame.HEIGHT),new Vector2D(WindowFrame.WIDTH-5,0)));
@@ -52,6 +56,14 @@ public class GameState implements Updateable,Drawable{
 		}
 		spawner.draw(g);
 		hud.draw(g);
+		
+		if(isDeath) {
+			g.drawImage(Assets.BLACKSCREEN,0,0,null);
+			g.setColor(Color.WHITE);
+			g.setFont(new Font("Arial", Font.BOLD, 70));
+			g.drawString("GAMEOVER",425, 360);
+			background.stopLoop();
+		}
 	}
 
 	@Override

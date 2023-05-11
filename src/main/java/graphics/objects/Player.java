@@ -23,11 +23,13 @@ public class Player extends MovingObject implements Updateable,Drawable,Collisio
 	public static int SHOOT_SPEED = 450;
 	public int CANON_TIER = 1;
 	public static int score = 0;
+	private boolean isDeath;
 	
 	public Player(GameState gameState, BufferedImage texture, Vector2D position, int speed, int MAX_HEALTH) {
 		super(gameState, texture, position, speed, MAX_HEALTH);
 		time = 0;
 		lastTime = System.currentTimeMillis();
+		isDeath = false;
 	}
 
 	@Override
@@ -134,6 +136,6 @@ public class Player extends MovingObject implements Updateable,Drawable,Collisio
 
 	@Override
 	public void onDeath() {
-		// metodo game over
+		gameState.isDeath = true;
 	}
 }
