@@ -7,8 +7,10 @@ import java.util.ArrayList;
 
 import main.java.Collisionable;
 import main.java.Drawable;
+import main.java.Sound;
 import main.java.Updateable;
 import main.java.Vector2D;
+import main.java.graphics.Assets;
 import main.java.graphics.MovingObject;
 import main.java.state.GameState;
 
@@ -32,7 +34,7 @@ public class Shot extends MovingObject implements Updateable,Drawable,Collisiona
 		position.y -= SPEED;
 		collidesWith();
 		if(position.y < -30) {
-			kill();
+			kill(false);
 		}
 		updateCollision();
 	}
@@ -45,13 +47,17 @@ public class Shot extends MovingObject implements Updateable,Drawable,Collisiona
 			if(hitBox.intersects(obj.hitBox) && !(obj instanceof Shot) && !(obj instanceof Player)) {
 				if(obj instanceof Enemy) {
 					
+					Sound impactSound = new Sound(Assets.IMPACT);
+					impactSound.setVolume(-20f);
+					impactSound.start();
+					
 					obj.HEALTH-=25;
 					
 					if(obj.HEALTH <= 0) {						
-						obj.kill();
+						obj.kill(true);
 					}
 					
-					kill();
+					kill(false);
 				}
 			}
 		}

@@ -41,4 +41,9 @@ public class Loader {
 		return null;
 	}
 	
+	public static InputStream fileLoader(String path) {
+		InputStream is = ClassLoader.getSystemClassLoader().getResourceAsStream(path);
+		return is;
+	}
+	
 }

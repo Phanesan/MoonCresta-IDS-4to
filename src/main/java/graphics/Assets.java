@@ -1,8 +1,7 @@
 package main.java.graphics;
 
 import java.awt.image.BufferedImage;
-
-import main.java.Sound;
+import java.io.InputStream;
 
 public abstract class Assets {
 	
@@ -17,5 +16,10 @@ public abstract class Assets {
 	// SONIDOS
 	
 	public static final String BACKGROUND_OST = "/main/resources/sounds/background/track1.wav";
+	public static final String SHOT_LASER = "/main/resources/sounds/sfx/DisparoLaser.wav";
+	public static final String IMPACT = "/main/resources/sounds/sfx/impact.wav";
+	public static final String DEATH = "/main/resources/sounds/sfx/death.wav";
+	public static final String DOWNGRADE = "/main/resources/sounds/sfx/downgrade.wav";
+	public static final String UPGRADE = "/main/resources/sounds/sfx/upgrade.wav";
 
 }

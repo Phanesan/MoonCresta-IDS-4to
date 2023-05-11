@@ -14,6 +14,7 @@ import main.java.WindowFrame;
 import main.java.graphics.Assets;
 import main.java.graphics.MovingObject;
 import main.java.graphics.objects.Enemy;
+import main.java.graphics.objects.HUD;
 import main.java.graphics.objects.Player;
 import main.java.graphics.objects.Shot;
 import main.java.graphics.objects.Wall;
@@ -23,6 +24,7 @@ public class GameState implements Updateable,Drawable{
 	public Player player;
 	private ArrayList <MovingObject> handler;
 	private ArrayList<Wall> wallHandler;
+	private HUD hud;
 	private Sound background;
 	private Spawner spawner;
 	
@@ -30,6 +32,7 @@ public class GameState implements Updateable,Drawable{
 		handler = new ArrayList<>();
 		wallHandler = new ArrayList<>();
 		spawner = new Spawner(this);
+		hud = new HUD();
 		
 		wallHandler.add(new Wall(this,new Dimension(5,WindowFrame.HEIGHT),new Vector2D(0,0)));
 		wallHandler.add(new Wall(this,new Dimension(5,WindowFrame.HEIGHT),new Vector2D(WindowFrame.WIDTH-5,0)));
@@ -48,6 +51,7 @@ public class GameState implements Updateable,Drawable{
 			handler.get(i).draw(g);
 		}
 		spawner.draw(g);
+		hud.draw(g);
 	}
 
 	@Override
@@ -57,6 +61,7 @@ public class GameState implements Updateable,Drawable{
 		}
 		background.update();
 		spawner.update();
+		hud.update();
 	}
 
 	public ArrayList<MovingObject> getHandler() {

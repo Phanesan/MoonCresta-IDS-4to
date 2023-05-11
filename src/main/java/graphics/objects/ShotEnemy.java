@@ -6,10 +6,12 @@ import java.util.ArrayList;
 
 import main.java.Collisionable;
 import main.java.Drawable;
+import main.java.Sound;
 import main.java.Updateable;
 import main.java.Vector2D;
 import main.java.WindowFrame;
 import main.java.exception.OutOfRangeCanonException;
+import main.java.graphics.Assets;
 import main.java.graphics.MovingObject;
 import main.java.state.GameState;
 
@@ -29,7 +31,7 @@ public class ShotEnemy extends MovingObject implements Updateable,Drawable,Colli
 		getPosition().y += SPEED;
 		collidesWith();
 		if(position.y >= WindowFrame.HEIGHT+50) {
-			kill();
+			kill(false);
 		}
 		updateCollision();
 	}
@@ -53,13 +55,17 @@ public class ShotEnemy extends MovingObject implements Updateable,Drawable,Colli
 						System.out.println("downgrade");
 					} catch (OutOfRangeCanonException e) {
 						System.out.println("muerto");
-						obj.kill();
+						Sound death = new Sound(Assets.DEATH);
+						death.setVolume(-10f);
+						death.start();
+						kill(false);
+						obj.kill(true);
 					} catch (Exception e) {
 						e.printStackTrace();
 					} finally {
 						// metodo Game Over
 					}
-					kill();
+					kill(false);
 				}
 			}
 		}

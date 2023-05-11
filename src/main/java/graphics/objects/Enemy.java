@@ -34,7 +34,7 @@ public class Enemy extends MovingObject implements Updateable,Drawable,Collision
 		getPosition().y+=SPEED;
 		
 		if(position.y >= WindowFrame.HEIGHT+50) {
-			kill();
+			kill(false);
 		}
 		
 		FPS++;
@@ -76,7 +76,7 @@ public class Enemy extends MovingObject implements Updateable,Drawable,Collision
 			for(int i = 0; i < movingObject.size(); i++) {
 				MovingObject obj = movingObject.get(i);
 				if(obj instanceof Enemy) {
-					obj.kill();
+					obj.kill(true);
 				}
 			}
 		}
