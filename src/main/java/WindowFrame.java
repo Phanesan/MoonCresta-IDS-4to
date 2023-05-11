@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -12,6 +13,8 @@ import javax.swing.border.EmptyBorder;
 
 import main.java.graphics.Assets;
 import main.java.state.GameState;
+import main.java.state.MenuState;
+import main.java.state.State;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
@@ -27,8 +30,8 @@ public class WindowFrame extends JFrame implements Runnable{
 	
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 720;
-	private static final String windowName = "MoonCresta";
-	private static volatile boolean running = false;
+	public static final String windowName = "MoonCresta";
+	public static volatile boolean running = false;
 	private static final Canvas canvas = new Canvas();
 	private static int APS = 0;
 	private static int FPS = 0;
@@ -36,9 +39,10 @@ public class WindowFrame extends JFrame implements Runnable{
 	
 	private Thread thread;
 	private Key key;
+	private Mouse mouse;
 	private BufferStrategy bs;
 	private Graphics g;
-	private GameState gameState;
+	public ArrayList<State> states;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -109,7 +113,7 @@ public class WindowFrame extends JFrame implements Runnable{
 		
 		// METODOS UPDATE //
 		key.update();
-		gameState.update();
+		State.currentState.update();
 		
 		// CONDICIONES
 		
@@ -128,10 +132,9 @@ public class WindowFrame extends JFrame implements Runnable{
 		// Fondo
 		g.setColor(Color.black);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
-		g.drawImage(Assets.BACKGROUND_GAME,0,0,null);
 		
 		// METODOS DRAW //
-		gameState.draw(g);
+		State.currentState.draw(g);
 		//////////////////
 		
 		g.dispose();
@@ -144,11 +147,18 @@ public class WindowFrame extends JFrame implements Runnable{
 		// INICIA CLASES
 		thread = new Thread(this);
 		key = new Key();
-		gameState = new GameState();
+		mouse = new Mouse();
+		states = new ArrayList<>();
 		
 		// LISTENERS
 		canvas.addKeyListener(key);
+		canvas.addMouseListener(mouse);
+		canvas.addMouseMotionListener(mouse);
 		
+		// INICIALIZA STATES
+		states.add(new MenuState()); // 0
+		
+		State.changeState(states.get(0));
 		thread.start();
 	}
 	

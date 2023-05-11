@@ -19,7 +19,7 @@ import main.java.graphics.objects.Player;
 import main.java.graphics.objects.Shot;
 import main.java.graphics.objects.Wall;
 
-public class GameState implements Updateable,Drawable{
+public class GameState extends State{
 	
 	public Player player;
 	private ArrayList <MovingObject> handler;
@@ -47,6 +47,7 @@ public class GameState implements Updateable,Drawable{
 
 	@Override
 	public void draw(Graphics g) {
+		g.drawImage(Assets.BACKGROUND_GAME,0,0,null);
 		for(int i = 0; i < handler.size(); i++) {
 			handler.get(i).draw(g);
 		}
