@@ -14,7 +14,8 @@ public abstract class Assets {
 	public static final BufferedImage ENEMY1 = Loader.imageLoader("/main/resources/enemy.png");
 	public static final BufferedImage BUTTON_IN = Loader.imageLoader("/main/resources/UI/button_blue.png");
 	public static final BufferedImage BUTTON_OUT = Loader.imageLoader("/main/resources/UI/button_white.png");
-	
+	public static final BufferedImage SOUND_ON = Loader.imageLoader("/main/resources/UI/Sound1.png");
+	public static final BufferedImage SOUND_OFF = Loader.imageLoader("/main/resources/UI/Sound2.png");
 	// SONIDOS
 	
 	public static final String BACKGROUND_OST = "/main/resources/sounds/background/track1.wav";
@@ -23,5 +24,6 @@ public abstract class Assets {
 	public static final String DEATH = "/main/resources/sounds/sfx/death.wav";
 	public static final String DOWNGRADE = "/main/resources/sounds/sfx/downgrade.wav";
 	public static final String UPGRADE = "/main/resources/sounds/sfx/upgrade.wav";
+	public static final String MENU = "/main/resources/sounds/background/Tema.wav";
 
 }
